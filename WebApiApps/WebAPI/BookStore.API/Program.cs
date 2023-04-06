@@ -3,6 +3,8 @@ using Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddExceptionHandler(options => options.ExceptionHandlingPath = "/error/dev");
+
 builder
     .AddOpenAPITools()
     .AddCustomRoutes()
@@ -17,10 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSeedData();
 }
 
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

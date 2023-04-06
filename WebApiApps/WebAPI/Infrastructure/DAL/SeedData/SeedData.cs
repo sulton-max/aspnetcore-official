@@ -13,11 +13,9 @@ namespace Infrastructure.DAL.SeedData
             if (dbContext == null)
                 throw new InvalidOperationException();
 
-            if (dbContext.Books.Any())
-                return;
-
-            dbContext.Books.AddRange(new[]
-            {
+            if (!dbContext.Books.Any())
+                dbContext.Books.AddRange(new[]
+                {
                 new Book
                 {
                     Name = "API Design patterns"
@@ -43,6 +41,16 @@ namespace Infrastructure.DAL.SeedData
                     Name = "Cracking the Coding Interview"
                 }
             });
+
+            if (!dbContext.Contacts.Any())
+                dbContext.Contacts.AddRange(new[]
+                {
+
+                    new Contact
+                    {
+                        Mobile = "998999663258"
+                    }
+                });
 
             dbContext.SaveChanges();
         }

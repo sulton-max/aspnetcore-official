@@ -46,9 +46,9 @@ namespace BookStore.API.Controllers
         /// </remarks>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Book>))]
-        public IActionResult Get([FromQuery] int pageSize, [FromQuery] int pageToken)
+        public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageToken)
         {
-            return Ok(_bookService.GetAsync(pageSize, pageToken));
+            return Ok(await _bookService.GetAsync(pageSize, pageToken));
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace BookStore.API.Controllers
         public async Task<ActionResult<Book>> Create([FromBody] Book book)
         {
             var result = await _bookService.CreateAsync(book);
-            return result
+            return result != null
                 ? CreatedAtAction(nameof(Create), book)
                 : BadRequest();
         }
@@ -148,7 +148,7 @@ namespace BookStore.API.Controllers
         ///     
         /// </remarks>
         [HttpPatch("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent )]
+        [ProducesResponseType(StatusCodes.Status200OK )]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -180,7 +180,7 @@ namespace BookStore.API.Controllers
         [Produces("application/json")]
         public async Task<ActionResult> DeleteById([FromRoute] int id)
         {
-            var result = await _bookService.DeleteAsync(id);
+            var result = await _bookService.DeleteByIdAsync(id);
             return result
                 ? Ok()
                 : BadRequest();

@@ -25,5 +25,13 @@ namespace BookStore.API.Extensions
             using var scope = app.Services.CreateScope();
             SeedData.Initialize(scope.ServiceProvider);
         }
+
+        public static void UseCustomExceptionHandler(this WebApplication app)
+        {
+            if (app.Environment.IsDevelopment())
+                app.UseExceptionHandler("/error/dev");
+            else
+                app.UseExceptionHandler("/error");
+        }
     }
 }

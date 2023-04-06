@@ -4,6 +4,5 @@ namespace Application.DAL.Repositories
 {
     public interface IBookStoreRepository : IRepositoryBase<Book>
     {
-        IRepositoryBase<Book> BookRepository { get; }
     }
 }

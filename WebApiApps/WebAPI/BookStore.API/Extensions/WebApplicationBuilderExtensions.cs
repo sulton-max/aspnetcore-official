@@ -35,27 +35,29 @@ namespace BookStore.API.Extensions
             //});
 
             // Add NSwag
-            builder.Services.AddSwaggerDocument(config =>
-            {
-                config.PostProcess = document =>
-                {
-                    document.Info.Title = "BookStore.API Doc";
-                    document.Info.Version = "v1";
-                    document.Info.Description = "Book Storage API Documentation for test";
-                    document.Info.TermsOfService = "Use under policies v3";
-                    document.Info.Contact = new NSwag.OpenApiContact
-                    {
-                        Name = "MaxDev",
-                        Email = "example@gmail.com",
-                        Url = "https://example.com"
-                    };
-                    document.Info.License = new NSwag.OpenApiLicense
-                    {
-                        Name = "Use under LICX",
-                        Url = "https://example.com"
-                    };
-                };
-            });
+            // builder.Services.AddSwaggerDocument(config =>
+            // {
+            //     config.PostProcess = document =>
+            //     {
+            //         document.Info.Title = "BookStore.API Doc";
+            //         document.Info.Version = "v1";
+            //         document.Info.Description = "Book Storage API Documentation for test";
+            //         document.Info.TermsOfService = "Use under policies v3";
+            //         document.Info.Contact = new NSwag.OpenApiContact
+            //         {
+            //             Name = "MaxDev",
+            //             Email = "example@gmail.com",
+            //             Url = "https://example.com"
+            //         };
+            //         document.Info.License = new NSwag.OpenApiLicense
+            //         {
+            //             Name = "Use under LICX",
+            //             Url = "https://example.com"
+            //         };
+            //     };
+            // });
+
+            builder.Services.AddOpenApiDocument();  
 
             return builder;
         }
@@ -71,14 +73,13 @@ namespace BookStore.API.Extensions
                     options.RespectBrowserAcceptHeader = true;
 
                     // Add custom formatters
-                    options.InputFormatters.Insert(0, new VcardInputFormatter());
-                    options.OutputFormatters.Insert(0, new ExcelOutputFormatter());
-                    options.OutputFormatters.Insert(0, new WordOutputFormatter());
-                    options.OutputFormatters.Insert(0, new VcardOutputFormatter());
+                    options.OutputFormatters.Add(new ExcelOutputFormatter());
+                    options.OutputFormatters.Add(new WordOutputFormatter());
+                    options.InputFormatters.Add(new VcardInputFormatter());
+                    options.OutputFormatters.Add(new VcardOutputFormatter());
                 })
-                .AddXmlSerializerFormatters()
-                .AddXmlDataContractSerializerFormatters()
-                .AddNewtonsoftJson();
+                .AddNewtonsoftJson()
+                .AddXmlSerializerFormatters();
 
             // Add only JSON PATCH input foratter
             //services.

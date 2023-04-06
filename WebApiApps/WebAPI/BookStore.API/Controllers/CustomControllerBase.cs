@@ -4,6 +4,7 @@ namespace BookStore.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class CustomControllerBase : ControllerBase
     {
         protected ILogger Logger;

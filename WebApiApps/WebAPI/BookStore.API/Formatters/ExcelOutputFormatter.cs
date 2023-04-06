@@ -28,8 +28,6 @@ public class ExcelOutputFormatter : OutputFormatter
         var serviceProvider = httpContext.RequestServices;
         var hostEnvironment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
-        var buffer = new StringBuilder();
-
         var webRootPath = hostEnvironment.WebRootPath;
         var filename = "result.xlsx";
         var physicalPath = Path.Combine(webRootPath, "GeneratedStats", filename);
